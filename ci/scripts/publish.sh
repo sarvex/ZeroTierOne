@@ -18,7 +18,7 @@ fi
 
 function publish_rpm {
     mkdir -p /${CHANNEL}/${DISTRO}
-    ls -la /${CHANNEL}    
+    ls -la /${CHANNEL}
     ls -la .
     cp -a ${ZT_NAME} /${CHANNEL}/${DISTRO}
 }
@@ -35,4 +35,4 @@ case ${PKGFMT} in
     "deb")
         publish_deb
 esac
-            
+
