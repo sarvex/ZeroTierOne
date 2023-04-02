@@ -8,13 +8,13 @@ local release_channel = "zerotier-releases";
 
 local targets = [
       { "os": "linux", distro: "redhat", "name": "el9",      "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "redhat", "name": "el8",      "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "redhat", "name": "el7",      "isas": [ "386",          "amd64",          "ppc64le"],                                  "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "amazon", "name": "amzn2",    "isas": [                 "amd64", "arm64" ],                                            "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "amazon", "name": "amzn2022", "isas": [                 "amd64", "arm64" ],                                            "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "fedora", "name": "fc38",     "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "fedora", "name": "fc37",     "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
-      // { "os": "linux", distro: "fedora", "name": "fc36",     "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "redhat", "name": "el8",      "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "redhat", "name": "el7",      "isas": [ "386",          "amd64",          "ppc64le"],                                  "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "amazon", "name": "amzn2",    "isas": [                 "amd64", "arm64" ],                                            "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "amazon", "name": "amzn2022", "isas": [                 "amd64", "arm64" ],                                            "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "fedora", "name": "fc38",     "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "fedora", "name": "fc37",     "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
+      { "os": "linux", distro: "fedora", "name": "fc36",     "isas": [                 "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
       // { "os": "linux", distro: "ubuntu", "name": "jammy",    "isas": [        "armv7", "amd64", "arm64", "ppc64le", "s390x", "riscv64" ],             "events": [ "push", "tag", "custom" ] },
       // { "os": "linux", distro: "ubuntu", "name": "focal",    "isas": [        "armv7", "amd64", "arm64", "ppc64le", "s390x", "riscv64" ],             "events": [ "push", "tag", "custom" ] },
       // { "os": "linux", distro: "ubuntu", "name": "bionic",   "isas": [ "386", "armv7", "amd64", "arm64", "ppc64le", "s390x" ],                        "events": [ "push", "tag", "custom" ] },
@@ -83,13 +83,13 @@ local index_image(distro) =
           registry + "/dnf-builder"
       else if distro == "windows" then
           registry + "/msi-builder"
-;          
+;
 
 local copy_commands(os, distro, name, isa, version) =
   if os == "linux" then [
       std.join(" ", [ "./ci/scripts/publish.sh", name, distro, isa, version, "${DRONE_BUILD_EVENT}" ])
     ]
-    else if os == "windows" then [  
+    else if os == "windows" then [
       "C:\\scripts\\fix-ec2-metadata.ps1",
       "Get-ChildItem windows",
       // "aws s3 cp windows\\bytey-SetupFiles\\bytey.msi s3://zerotier-builds/windows/" + version + "/bytey.msi",
@@ -146,7 +146,7 @@ local Build(os, distro, name, isa, events) = {
       "image": builder_image(os),
       "commands": build_commands(os, distro, name, isa, "${DRONE_TAG}"),
       "when": { "event": [ "tag" ]},
-    },    
+    },
     {
       "name": "copy build",
       "image": builder_image(os),
@@ -159,8 +159,8 @@ local Build(os, distro, name, isa, events) = {
       "image": builder_image(os),
       "commands": copy_commands(os, distro, name, isa, "${DRONE_TAG}"),
       "volumes": release_step_volumes(os),
-      "when": { "event": [ "tag" ]},      
-    },    
+      "when": { "event": [ "tag" ]},
+    },
   ],
   "volumes": host_volumes(os),
   "platform": { "os": os, [ if isa == "arm64" || isa == "armv7" then "arch" ]: "arm64" },
@@ -187,7 +187,7 @@ local Test(os, distro, name, isa, events) = {
       "volumes": release_step_volumes(os),
       "commands": test_commands(os, distro, name, isa, "${DRONE_TAG}"),
       "when": { "event": [ "tag" ]},
-    },    
+    },
   ],
   "volumes": host_volumes(os),
   "platform": { "os": os, [ if isa == "arm64" || isa == "armv7" then "arch" ]: "arm64" },
@@ -216,8 +216,8 @@ local Index(p) = {
       "commands": index_commands(p.os, "zerotier-releases", p.distro, p.name, p.isas),
       "volumes": release_step_volumes(p.os),
       "environment":{ "GPG_PRIVATE_KEY": { from_secret: "gpg-private-key" }},
-      "when": { "event": [ "tag" ]},  
-    },    
+      "when": { "event": [ "tag" ]},
+    },
   ],
   "volumes": host_volumes(p.os),
   "platform": { "os": p.os },
@@ -246,4 +246,3 @@ std.flattenArrays([
      ]
      for p in targets
  ])
- 

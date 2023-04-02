@@ -279,6 +279,1668 @@ volumes:
 ---
 clone:
   depth: 1
+kind: pipeline
+name: el8 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el8 redhat amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el8 redhat amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: el8 arm64 build
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el8 redhat arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el8 redhat arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: el8 ppc64le build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el8 redhat ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el8 redhat ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: el8 s390x build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el8 redhat s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el8 redhat s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el8 redhat s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el8 amd64 build
+- el8 arm64 build
+- el8 ppc64le build
+- el8 s390x build
+kind: pipeline
+name: el8 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds redhat el8 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases redhat el8 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: el7 386 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el7 redhat 386 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el7 redhat 386 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el7 redhat 386 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el7 redhat 386 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: el7 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el7 redhat amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el7 redhat amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el7 redhat amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el7 redhat amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: el7 ppc64le build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh el7 redhat ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh el7 redhat ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh el7 redhat ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh el7 redhat ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el7 386 build
+- el7 amd64 build
+- el7 ppc64le build
+kind: pipeline
+name: el7 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds redhat el7 386 amd64 ppc64le
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases redhat el7 386 amd64 ppc64le
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: amzn2 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh amzn2 amazon amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh amzn2 amazon amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh amzn2 amazon amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh amzn2 amazon amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: amzn2 arm64 build
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh amzn2 amazon arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh amzn2 amazon arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh amzn2 amazon arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh amzn2 amazon arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- amzn2 amd64 build
+- amzn2 arm64 build
+kind: pipeline
+name: amzn2 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds amazon amzn2 amd64 arm64
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases amazon amzn2 amd64 arm64
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: amzn2022 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh amzn2022 amazon amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh amzn2022 amazon amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh amzn2022 amazon amd64 100.0.0+${DRONE_COMMIT_SHA:0:8}
+    ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh amzn2022 amazon amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: amzn2022 arm64 build
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh amzn2022 amazon arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh amzn2022 amazon arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh amzn2022 amazon arm64 100.0.0+${DRONE_COMMIT_SHA:0:8}
+    ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh amzn2022 amazon arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- amzn2022 amd64 build
+- amzn2022 arm64 build
+kind: pipeline
+name: amzn2022 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds amazon amzn2022 amd64 arm64
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases amazon amzn2022 amd64 arm64
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc38 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc38 arm64 build
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc38 ppc64le build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc38 s390x build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc38 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc38 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc38 amd64 build
+- fc38 arm64 build
+- fc38 ppc64le build
+- fc38 s390x build
+kind: pipeline
+name: fc38 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds fedora fc38 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases fedora fc38 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc37 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc37 arm64 build
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc37 ppc64le build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc37 s390x build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc37 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc37 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc37 amd64 build
+- fc37 arm64 build
+- fc37 ppc64le build
+- fc37 s390x build
+kind: pipeline
+name: fc37 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds fedora fc37 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases fedora fc37 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc36 amd64 build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc36 arm64 build
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc36 ppc64le build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+kind: pipeline
+name: fc36 s390x build
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: build
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/build.sh fc36 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: release
+  when:
+    event:
+    - tag
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/publish.sh fc36 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: copy relase
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc36 amd64 build
+- fc36 arm64 build
+- fc36 ppc64le build
+- fc36 s390x build
+kind: pipeline
+name: fc36 index
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - /usr/local/bin/index zerotier-builds fedora fc36 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - /usr/local/bin/index zerotier-releases fedora fc36 amd64 arm64 ppc64le s390x
+  environment:
+    GPG_PRIVATE_KEY:
+      from_secret: gpg-private-key
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/dnf-builder
+  name: index release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
 depends_on:
 - el9 index
 kind: pipeline
@@ -454,7 +2116,1025 @@ volumes:
     path: /zerotier-releases
   name: zerotier-releases
 ---
+clone:
+  depth: 1
+depends_on:
+- el8 index
+kind: pipeline
+name: el8 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el8 redhat amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el8 redhat amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el8 index
+kind: pipeline
+name: el8 arm64 test
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el8 redhat arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el8 redhat arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el8 index
+kind: pipeline
+name: el8 ppc64le test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el8 redhat ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el8 redhat ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el8 index
+kind: pipeline
+name: el8 s390x test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el8 redhat s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el8 redhat s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el7 index
+kind: pipeline
+name: el7 386 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el7 redhat 386 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el7 redhat 386 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el7 index
+kind: pipeline
+name: el7 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el7 redhat amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el7 redhat amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- el7 index
+kind: pipeline
+name: el7 ppc64le test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh el7 redhat ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh el7 redhat ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- amzn2 index
+kind: pipeline
+name: amzn2 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh amzn2 amazon amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh amzn2 amazon amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- amzn2 index
+kind: pipeline
+name: amzn2 arm64 test
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh amzn2 amazon arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh amzn2 amazon arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- amzn2022 index
+kind: pipeline
+name: amzn2022 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh amzn2022 amazon amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh amzn2022 amazon amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- amzn2022 index
+kind: pipeline
+name: amzn2022 arm64 test
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh amzn2022 amazon arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh amzn2022 amazon arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc38 index
+kind: pipeline
+name: fc38 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc38 index
+kind: pipeline
+name: fc38 arm64 test
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc38 index
+kind: pipeline
+name: fc38 ppc64le test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc38 index
+kind: pipeline
+name: fc38 s390x test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc38 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc37 index
+kind: pipeline
+name: fc37 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc37 index
+kind: pipeline
+name: fc37 arm64 test
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc37 index
+kind: pipeline
+name: fc37 ppc64le test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc37 index
+kind: pipeline
+name: fc37 s390x test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc37 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc36 index
+kind: pipeline
+name: fc36 amd64 test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora amd64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora amd64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc36 index
+kind: pipeline
+name: fc36 arm64 test
+platform:
+  arch: arm64
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora arm64 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora arm64 ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc36 index
+kind: pipeline
+name: fc36 ppc64le test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora ppc64le 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora ppc64le ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
+clone:
+  depth: 1
+depends_on:
+- fc36 index
+kind: pipeline
+name: fc36 s390x test
+platform:
+  os: linux
+pull: always
+steps:
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora s390x 100.0.0+${DRONE_COMMIT_SHA:0:8} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test build
+  volumes:
+  - name: zerotier-builds
+    path: /zerotier-builds
+  when:
+    event:
+    - push
+- commands:
+  - ./ci/scripts/test.sh fc36 fedora s390x ${DRONE_TAG} ${DRONE_BUILD_EVENT}
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/honda-builder
+  name: test release
+  volumes:
+  - name: zerotier-releases
+    path: /zerotier-releases
+  when:
+    event:
+    - tag
+trigger:
+  event:
+  - push
+  - tag
+  - custom
+type: docker
+volumes:
+- host:
+    path: /zerotier-builds
+  name: zerotier-builds
+- host:
+    path: /zerotier-releases
+  name: zerotier-releases
+---
 kind: signature
-hmac: c47ab8a1212ec8892a05d9554821bbe1ae41cf85ee2a5851f9ab9f72989f306c
+hmac: d38b0923ce863e0b0a00d904868f88c07074b6f95b6edf1618dce55133ad0cc7
 
 ...
