@@ -92,7 +92,7 @@ local build_commands(os, distro, name, isa, version) =
         [ std.join(" ", [ "./ci/scripts/build.sh", name, distro, isa, version, "${DRONE_BUILD_EVENT}" ]) ]
       else
         if os == "windows" then
-           [ "windows/build.ps1", "windows/package.ps1" ]
+           [ "ci/scripts/build.ps1", "ci/scripts/package.ps1" ]
       else
         if os == "darwin" then
            [ "whoami" ]

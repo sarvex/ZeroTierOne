@@ -8,16 +8,16 @@ platform:
 pull: always
 steps:
 - commands:
-  - windows/build.ps1
-  - windows/package.ps1
+  - ci/scripts/build.ps1
+  - ci/scripts/package.ps1
   image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/windows-builder
   name: build
   when:
     event:
     - push
 - commands:
-  - windows/build.ps1
-  - windows/package.ps1
+  - ci/scripts/build.ps1
+  - ci/scripts/package.ps1
   image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/windows-builder
   name: release
   when:
@@ -123,6 +123,6 @@ type: docker
 volumes: []
 ---
 kind: signature
-hmac: 295addb318387359252ae045071c4d560d943349137370395ab66bb18a8480c8
+hmac: f1f486216acf709114178d9f07a9a0b9098de3556e8208c63a88973bc420bebe
 
 ...
