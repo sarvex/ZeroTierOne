@@ -129,16 +129,16 @@ local Build(os, distro, name, isa, events) = {
       "commands": build_commands(os, distro, name, isa, "${DRONE_TAG}"),
       "when": { "event": [ "tag" ]},
     },
-    {
-      "name": "license installer",
-      "image": builder_image(os),
-      "environment":{ "LICENSE": { from_secret: "advancedinstaller_license" }},
-      "commands": [
-          "cat LICENSE > license.dat",
-          "cat license.dat",
-      ],
-      "when": { "event": [ "push", "tag", "custom" ]},
-    },    
+    // {
+    //   "name": "license installer",
+    //   "image": builder_image(os),
+    //   "environment":{ "LICENSE": { from_secret: "advancedinstaller_license" }},
+    //   "commands": [
+    //       "cat LICENSE > license.dat",
+    //       "cat license.dat",
+    //   ],
+    //   "when": { "event": [ "push", "tag", "custom" ]},
+    // },
     {
       "name": "copy build",
       "image": builder_image(os),
