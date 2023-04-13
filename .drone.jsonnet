@@ -7,17 +7,18 @@ local build_channel = "zerotier-builds";
 local release_channel = "zerotier-releases";
 
 local targets = [
-      { "os": "linux", distro: "redhat", "name": "el9",      "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "redhat", "name": "el8",      "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "fedora", "name": "fc38",     "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "fedora", "name": "fc37",     "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "fedora", "name": "fc36",     "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "ubuntu", "name": "jammy",    "isas": [ "s390x", "riscv64" ], "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "ubuntu", "name": "focal",    "isas": [ "s390x", "riscv64" ], "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "ubuntu", "name": "bionic",   "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "ubuntu", "name": "xenial",   "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "debian", "name": "bookworm", "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
-      { "os": "linux", distro: "debian", "name": "bullseye", "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "redhat", "name": "el9",      "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "redhat", "name": "el8",      "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "fedora", "name": "fc38",     "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "fedora", "name": "fc37",     "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "fedora", "name": "fc36",     "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "ubuntu", "name": "jammy",    "isas": [ "s390x", "riscv64" ], "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "ubuntu", "name": "focal",    "isas": [ "s390x", "riscv64" ], "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "ubuntu", "name": "bionic",   "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "ubuntu", "name": "xenial",   "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "debian", "name": "bookworm", "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      // { "os": "linux", distro: "debian", "name": "bullseye", "isas": [ "s390x" ],            "events": [ "push", "tag", "custom" ] },
+      { "os": "windows", distro: "windows", "name": "windows",  "isas": [ "amd64" ], "events": [ "push", "tag", "custom" ] },
 ];
 
 local master_targets = [
@@ -73,9 +74,7 @@ local copy_commands(os, distro, name, isa, version) =
       std.join(" ", [ "./ci/scripts/publish.sh", name, distro, isa, version, "${DRONE_BUILD_EVENT}" ])
     ]
     else if os == "windows" then [
-      "C:\\scripts\\fix-ec2-metadata.ps1",
-      "Get-ChildItem windows",
-      // "aws s3 cp windows\\bytey-SetupFiles\\bytey.msi s3://zerotier-builds/windows/" + version + "/bytey.msi",
+      std.join(" ", [ "./ci/scripts/publish.ps1", name, distro, isa, version, "${DRONE_BUILD_EVENT}" ])
     ] else if os == "darwin" then [
         "echo hello"
       ]
