@@ -130,6 +130,16 @@ local Build(os, distro, name, isa, events) = {
       "when": { "event": [ "tag" ]},
     },
     {
+      "name": "license installer",
+      "image": builder_image(os),
+      "environment":{ "LICENSE": { from_secret: "advancedinstaller_license" }},
+      "commands": [
+          "cat LICENSE > license.dat",
+          "cat license.dat",
+      ]
+      "when": { "event": [ "push", "tag", "custom" ]},
+    },    
+    {
       "name": "copy build",
       "image": builder_image(os),
       "commands": copy_commands(os, distro, name, isa, "100.0.0+${DRONE_COMMIT_SHA:0:8}"),
