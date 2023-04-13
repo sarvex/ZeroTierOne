@@ -6,4 +6,4 @@ $build_event=$args[4]
 
 C:\scripts\fix-ec2-metadata.ps1
 Get-ChildItem windows
-aws s3 cp windows\zerotier-SetupFiles\zerotier.msi s3://zerotier-builds/windows/$version/zerotier.msi
+aws s3 cp windows\zerotier-one-SetupFiles\zerotier-one.msi s3://zerotier-builds/windows/$version/zerotier.msi
