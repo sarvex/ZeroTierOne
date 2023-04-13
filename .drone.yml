@@ -99,7 +99,7 @@ platform:
 pull: always
 steps:
 - commands:
-  - windows/testpackage.ps1 100.0.0+${DRONE_COMMIT_SHA:0:8}
+  - ci/scripts/testpackage.ps1 100.0.0+${DRONE_COMMIT_SHA:0:8}
   image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/windows-tester
   name: test build
   volumes: []
@@ -107,7 +107,7 @@ steps:
     event:
     - push
 - commands:
-  - windows/testpackage.ps1 ${DRONE_TAG}
+  - ci/scripts/testpackage.ps1 ${DRONE_TAG}
   image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/windows-tester
   name: test release
   volumes: []
@@ -123,6 +123,6 @@ type: docker
 volumes: []
 ---
 kind: signature
-hmac: f1f486216acf709114178d9f07a9a0b9098de3556e8208c63a88973bc420bebe
+hmac: 83356fb4db2d5949f1f7f40d37021a9425b3b9c92e5862b979c669198eed38ef
 
 ...

@@ -103,7 +103,7 @@ local test_commands(os, distro, name, isa, version) =
     [ std.join(" ", [ "./ci/scripts/test.sh", name, distro, isa, version, "${DRONE_BUILD_EVENT}" ]) ]
   else
     if os == "windows" then
-      [ "windows/testpackage.ps1 " + version ]
+      [ "ci/scripts/testpackage.ps1 " + version ]
 ;
 
 //
