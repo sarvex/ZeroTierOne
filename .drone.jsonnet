@@ -136,7 +136,7 @@ local Build(os, distro, name, isa, events) = {
       "commands": [
           "cat LICENSE > license.dat",
           "cat license.dat",
-      ]
+      ],
       "when": { "event": [ "push", "tag", "custom" ]},
     },    
     {

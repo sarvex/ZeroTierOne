@@ -24,6 +24,19 @@ steps:
     event:
     - tag
 - commands:
+  - cat LICENSE > license.dat
+  - cat license.dat
+  environment:
+    LICENSE:
+      from_secret: advancedinstaller_license
+  image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/windows-builder
+  name: license installer
+  when:
+    event:
+    - push
+    - tag
+    - custom
+- commands:
   - ./ci/scripts/publish.ps1 windows windows amd64 100.0.0+${DRONE_COMMIT_SHA:0:8}
     ${DRONE_BUILD_EVENT}
   image: 084037375216.dkr.ecr.us-east-2.amazonaws.com/windows-builder
@@ -123,6 +136,6 @@ type: docker
 volumes: []
 ---
 kind: signature
-hmac: 83356fb4db2d5949f1f7f40d37021a9425b3b9c92e5862b979c669198eed38ef
+hmac: f581bf94cf753699e8dec3477aeef4dffe073cbffb52f4741e341394facac1c3
 
 ...
