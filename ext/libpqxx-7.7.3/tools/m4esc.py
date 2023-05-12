@@ -34,17 +34,11 @@ def parse_args():
 
 
 def open_input(in_file):
-    if in_file == '-':
-        return stdin
-    else:
-        return open(in_file)
+    return stdin if in_file == '-' else open(in_file)
 
 
 def open_output(out_file):
-    if out_file == '-':
-        return stdout
-    else:
-        return open(out_file, 'w')
+    return stdout if out_file == '-' else open(out_file, 'w')
 
 
 def escape(line):

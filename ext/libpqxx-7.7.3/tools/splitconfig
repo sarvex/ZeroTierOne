@@ -43,7 +43,7 @@ def guess_fs_encoding():
         ]
     for encoding in candidates:
         lower = encoding.lower()
-        if lower != 'ascii' and lower != 'ansi_x3.4-1968':
+        if lower not in ['ascii', 'ansi_x3.4-1968']:
             return encoding
     raise AssertionError("unreachable code reached.")
 
@@ -132,10 +132,7 @@ def extract_macro_name(config_line):
     """
     config_line = config_line.strip()
     match = re.match('\s*#\s*define\s+([^\s]+)', config_line)
-    if match is None:
-        return None
-    else:
-        return match.group(1)
+    return None if match is None else match[1]
 
 
 def extract_section(header_lines, items, publication, factor):
@@ -157,10 +154,7 @@ def extract_section(header_lines, items, publication, factor):
 
 def compose_header(lines, publication, factor):
     """Generate header text containing given lines."""
-    intro = (
-        "/* Automatically generated from config.h: %s/%s config. */"
-        % (publication, factor)
-        )
+    intro = f"/* Automatically generated from config.h: {publication}/{factor} config. */"
     return '\n'.join([intro, ''] + lines + [''])
 
 
@@ -178,13 +172,13 @@ def generate_config(source_tree, header_lines, items, publication, factor):
     """
     assert isinstance(source_tree, type(''))
     config_file = os.path.join(
-        source_tree, 'include', 'pqxx',
-        'config-%s-%s.h' % (publication, factor))
+        source_tree, 'include', 'pqxx', f'config-{publication}-{factor}.h'
+    )
     unicode_path = config_file.encode(guess_output_encoding(), 'replace')
     section = extract_section(header_lines, items, publication, factor)
     contents = compose_header(section, publication, factor)
     if read_text_file(config_file) == contents:
-        print("Generating %s: no changes--skipping." % unicode_path)
+        print(f"Generating {unicode_path}: no changes--skipping.")
         return
 
     print("Generating %s: %d item(s)." % (unicode_path, len(section)))
@@ -207,15 +201,12 @@ def parse_args():
 def check_args(args):
     """Validate command-line arguments."""
     if not os.path.isdir(args.sourcetree):
-        raise Exception("Not a directory: '%s'." % args.sourcetree)
+        raise Exception(f"Not a directory: '{args.sourcetree}'.")
 
 
 def get_current_dir():
     cwd = getcwd()
-    if isinstance(cwd, bytes):
-        return decode_path(cwd)
-    else:
-        return cwd
+    return decode_path(cwd) if isinstance(cwd, bytes) else cwd
 
 
 def main():
@@ -224,8 +215,8 @@ def main():
     check_args(args)
     # The configitems file is under revision control; it's in sourcetree.
     items = read_configitems(os.path.join(args.sourcetree, 'configitems'))
-    publications = sorted(set(item[1] for item in items))
-    factors = sorted(set(item[2] for item in items))
+    publications = sorted({item[1] for item in items})
+    factors = sorted({item[2] for item in items})
     # The config.h header is generated; it's in the build tree, which should
     # be where we are.
     directory = get_current_dir()

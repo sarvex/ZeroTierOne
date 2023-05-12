@@ -154,10 +154,7 @@ def write_check_code(work_dir):
 def check_compiler(work_dir, cxx, stdlib, check, verbose=False):
     """Is the given compiler combo available?"""
     err_file = os.path.join(work_dir, 'stderr.log')
-    if verbose:
-        err_output = open(err_file, 'w')
-    else:
-        err_output = DEVNULL
+    err_output = open(err_file, 'w') if verbose else DEVNULL
     try:
         command = [cxx, check]
         if stdlib != '':
@@ -167,7 +164,7 @@ def check_compiler(work_dir, cxx, stdlib, check, verbose=False):
         if verbose:
             with open(err_file) as errors:
                 stdout.write(errors.read())
-            print("Can't build with '%s %s'.  Skipping." % (cxx, stdlib))
+            print(f"Can't build with '{cxx} {stdlib}'.  Skipping.")
         return False
     else:
         return True
@@ -195,10 +192,7 @@ def find_cmake_command():
         return None
 
     names = {generator['name'] for generator in json.loads(caps)['generators']}
-    for gen in CMAKE_GENERATORS.keys():
-        if gen in names:
-            return gen
-    return None
+    return next((gen for gen in CMAKE_GENERATORS.keys() if gen in names), None)
 
 
 class Config:
@@ -215,7 +209,7 @@ class Config:
 
     def make_log_name(self):
         """Compose log file name for this build."""
-        return "build-%s.out" % self.name()
+        return f"build-{self.name()}.out"
 
 
 class Build:
@@ -296,20 +290,15 @@ class AutotoolsBuild(Build):
     __metaclass__ = ABCMeta
 
     def configure(self, log):
-        configure = [
-            os.path.join(getcwd(), "configure"),
-            "CXX=%s" % self.config.cxx,
-            ]
+        configure = [os.path.join(getcwd(), "configure"), f"CXX={self.config.cxx}"]
 
         if self.config.stdlib == '':
-            configure += [
-                "CXXFLAGS=%s" % self.config.opt,
-            ]
+            configure += [f"CXXFLAGS={self.config.opt}"]
         else:
             configure += [
-                "CXXFLAGS=%s %s" % (self.config.opt, self.config.stdlib),
-                "LDFLAGS=%s" % self.config.stdlib,
-                ]
+                f"CXXFLAGS={self.config.opt} {self.config.stdlib}",
+                f"LDFLAGS={self.config.stdlib}",
+            ]
 
         configure += [
             "--disable-documentation",
@@ -414,7 +403,7 @@ def service_builds(in_queue, fail_queue, out_queue):
         try:
             build.do_build()
         except Exception as error:
-            fail_queue.put((build, "%s" % error))
+            fail_queue.put((build, f"{error}"))
         else:
             out_queue.put(build)
         in_queue.task_done()
@@ -435,7 +424,7 @@ def service_tests(in_queue, fail_queue, out_queue):
         try:
             build.do_test()
         except Exception as error:
-            fail_queue.put((build, "%s" % error))
+            fail_queue.put((build, f"{error}"))
         else:
             out_queue.put(build)
         in_queue.task_done()
@@ -445,17 +434,14 @@ def report_failures(queue, message):
     """Report failures from a failure queue.  Return total number."""
     failures = 0
     for build, error in read_queue(queue, block=False):
-        print("%s: %s - %s" % (message, build.config.name(), error))
+        print(f"{message}: {build.config.name()} - {error}")
         failures += 1
     return failures
 
 
 def count_entries(queue):
     """Get and discard all entries from `queue`, return the total count."""
-    total = 0
-    for _ in read_queue(queue, block=False):
-        total += 1
-    return total
+    return sum(1 for _ in read_queue(queue, block=False))
 
 
 def gather_builds(args):
@@ -467,10 +453,10 @@ def gather_builds(args):
     compilers = check_compilers(
         compiler_candidates, args.stdlibs.split(','),
         verbose=args.verbose)
-    if list(compilers) == []:
+    if not list(compilers):
         raise Fail(
-            "Did not find any viable compilers.  Tried: %s."
-            % ', '.join(compiler_candidates))
+            f"Did not find any viable compilers.  Tried: {', '.join(compiler_candidates)}."
+        )
 
     opt_levels = args.optimize.split(',')
     link_types = LINK.items()
@@ -521,7 +507,7 @@ def enqueue_error(queue, build, error):
 def main(args):
     """Do it all."""
     if not os.path.isdir(args.logs):
-        raise Fail("Logs location '%s' is not a directory." % args.logs)
+        raise Fail(f"Logs location '{args.logs}' is not a directory.")
 
     builds = gather_builds(args)
     if args.verbose:
